@@ -33,7 +33,8 @@ export default function Home() {
           {isInfoOpen && (
             <div className="absolute right-0 top-full mt-1 w-80 rounded border border-gray-200 bg-white p-4 shadow-lg text-sm text-gray-700">
               <ol className="space-y-2 list-decimal list-inside">
-                <li><strong>Get input data</strong> — User provides text to analyze.</li>
+                <h1>This demo mimics an agent that determines whether the content it processes should be classified for hate speech.</h1>
+                <li><strong>Get input data</strong> — User provides text to moderate.</li>
                 <li><strong>GPT API</strong> — A language model reasons whether the input is valid and should be classified for hate speech or not hate speech.</li>
                 <li><strong>RoBERTa model</strong> — API call to facebook/roberta-hate-speech-dynabench-r4-target for classification.</li>
                 <li><strong>Display result</strong> — Based on the score (hatespeech / nothatespeech), we display flagged or not flagged.</li>
@@ -49,10 +50,14 @@ export default function Home() {
             Input text
           </h1>
 
+          <h2 className="italic text-black text-center mb-4">
+            If your text is hate speech, this agent will flag it.
+          </h2>
+
           <textarea
             className="w-full resize-none rounded-xl border border-gray-200 bg-white px-4 py-3.5 text-gray-900 placeholder-gray-400 transition-colors focus:border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200"
             rows={4}
-            placeholder="hate speech example: go back to your country"
+            placeholder="example: go back to your country"
           />
 
           <button
