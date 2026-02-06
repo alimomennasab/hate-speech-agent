@@ -102,6 +102,10 @@ def call_roberta_hf(text: str) -> dict:
         return {"label": top.label, "score": top.score}
     return {"label": "unknown", "score": 0}
 
+@app.get("/")
+async def health_check():
+    return {"status": "ok"}
+
 @app.post("/classify")
 async def classify_text(input: TextInput):
     text = input.text.strip()
