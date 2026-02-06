@@ -39,7 +39,7 @@ export default function Home() {
   return (
     <div className="flex min-h-screen flex-col bg-[#f9f4e6]">
       <header className="flex items-center justify-between bg-[#ff3912] px-8 py-4">
-        <h1 className="text-4xl font-semibold tracking-tight text-black">
+        <h1 className="text-3xl font-semibold tracking-tight text-black">
           Hate Speech Agent Demo
         </h1>
         <div
@@ -71,7 +71,7 @@ export default function Home() {
       <main className="flex flex-1 items-center justify-center px-4">
         <div className="w-full max-w-lg border border-gray-200 bg-white p-8 shadow-lg">
           <h1 className="text-xl font-semibold text-black text-center mb-4"> 
-            Input text
+            Input text content
           </h1>
 
           <h2 className="italic text-black text-center mb-4">
