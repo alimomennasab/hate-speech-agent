@@ -39,7 +39,7 @@ export default function Home() {
   return (
     <div className="flex min-h-screen flex-col bg-[#f9f4e6]">
       <header className="flex items-center justify-between bg-[#ff3912] px-8 py-4">
-        <h1 className="text-3xl font-semibold tracking-tight text-black">
+        <h1 className="text-3xl font-medium tracking-tight text-black">
           Hate Speech Agent Demo
         </h1>
         <div
@@ -117,7 +117,7 @@ export default function Home() {
             type="button"
             onClick={handleCheck}
             disabled={loading || !inputText.trim()}
-            className="mt-5 w-full rounded-xl bg-[#ff3912] py-3 text-xl text-black hover:opacity-90 transition-opacity font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+            className="mt-5 w-full rounded-xl bg-[#ff3912] py-3 text-xl text-black hover:opacity-90 transition-opacity font-medium disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? "Checking…" : "Check for hate speech"}
           </button>
