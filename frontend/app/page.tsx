@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useToggle } from "./hooks/useToggle";
+import { useToggle } from "@/app/hooks/useToggle"
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
@@ -40,7 +40,7 @@ export default function Home() {
     <div className="flex min-h-screen flex-col bg-[#f9f4e6]">
       <header className="flex items-center justify-between bg-[#ff3912] px-8 py-4">
         <h1 className="text-4xl font-semibold tracking-tight text-black">
-          Is this hate speech?
+          Hate Speech Agent Demo
         </h1>
         <div
           className="relative"
@@ -50,7 +50,7 @@ export default function Home() {
           <button
             type="button"
             onClick={togglePinned}
-            className="font-semibold text-black p-2 hover:opacity-90 transition-opacity"
+            className="font-medium text-black p-2 hover:opacity-90 transition-opacity"
           >
             HOW DOES THIS WORK?
           </button>
@@ -124,6 +124,17 @@ export default function Home() {
 
         </div>
       </main>
+
+      <footer className="border-t border-gray-200 bg-[#eee8dc] py-4 text-center text-sm text-gray-600">
+        <a
+          href="https://github.com/alimomennasab/hate-speech-agent"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:text-[#ff3912] transition-colors"
+        >
+          View on GitHub
+        </a>
+      </footer>
     </div>
   );
 }
