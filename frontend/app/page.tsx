@@ -78,14 +78,25 @@ export default function Home() {
             If your text is hate speech, this agent will flag it.
           </h2>
 
-          <textarea
-            value={inputText}
-            onChange={(e) => setInputText(e.target.value)}
-            className="w-full resize-none rounded-xl border border-gray-200 bg-white px-4 py-3.5 text-gray-900 placeholder-gray-400 transition-colors focus:border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200"
-            rows={4}
-            placeholder="example: go back to your country"
-            disabled={loading}
-          />
+          <div className="relative">
+            <textarea
+              value={inputText}
+              onChange={(e) => setInputText(e.target.value)}
+              className="w-full resize-none rounded-xl border border-gray-200 bg-white px-4 py-3.5 text-gray-900 transition-colors focus:border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200"
+              rows={6}
+              disabled={loading}
+            />
+            {!inputText && (
+              <div
+                className="pointer-events-none absolute inset-0 flex flex-col gap-1 px-4 py-3.5 text-gray-400 text-sm"
+                aria-hidden
+              >
+                <span>• Non-classified neutral speech example: hello, how are you</span>
+                <span>• Unflagged but harmful speech example: I hate you</span>
+                <span>• Flagged hate speech example: go back to your country</span>
+              </div>
+            )}
+          </div>
 
           {result && (
             <div className="mt-3 rounded-xl border border-gray-200 bg-gray-50 p-4">
