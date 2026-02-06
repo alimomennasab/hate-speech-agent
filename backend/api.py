@@ -17,7 +17,10 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # TODO: specify frontend URL
+    allow_origins=[
+        "https://hate-speech-agent.netlify.app",
+        "https://www.hate-speech-agent.netlify.app",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
