@@ -1,8 +1,6 @@
 # Hate Speech Agent
 
-This project is a content moderation agent demo that uses a language model to determine whether text content should be routed to a hate speech classifier. Enter text, the language model decides whether it should be tested for hate speech using the classifier, then runs the RoBERTa model if appropriate.
-
-Not all text is worth classifying—code, spam, or gibberish can trigger false positives and waste resources. Routing first keeps moderation focused on content that might actually be harmful, and reduces unnecessary classifier calls at scale.
+This project is a content moderation agent demo that uses a language model to determine whether text content should be routed to a hate speech classifier. Rather than sending all inputs directly to a classifier, the agent first evaluates whether content is worth classifying, which filters out code/spam/other non-relevant text. This reduces unnecessary API calls and computational costs, while maintaining accurate moderation for legitimate moderation cases.
 
 **Live demo:** [https://hate-speech-agent.netlify.app](https://hate-speech-agent.netlify.app)
 
