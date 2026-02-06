@@ -1,6 +1,8 @@
 # Hate Speech Agent
 
-This project is a content moderation agent demo that uses a language model to determine whether text content should be routed to a hate speech classifier. Enter text, the language models decides whether it should be tested for hate speech using the classifier, then runs the RoBERTa model if appropriate.
+This project is a content moderation agent demo that uses a language model to determine whether text content should be routed to a hate speech classifier. Enter text, the language model decides whether it should be tested for hate speech using the classifier, then runs the RoBERTa model if appropriate.
+
+**Live demo:** [https://hate-speech-agent.netlify.app](https://hate-speech-agent.netlify.app)
 
 ## Models
 
@@ -19,8 +21,8 @@ This project is a content moderation agent demo that uses a language model to de
 
 ## Stack
 
-- **Frontend** — Next.js 16, React 19, Tailwind CSS
-- **Backend** — FastAPI, OpenAI API (gpt-4o-mini), HuggingFace Inference API (facebook/roberta-hate-speech-dynabench-r4-target)
+- **Frontend** — Next.js 16, React 19, Tailwind CSS (deployed on Netlify)
+- **Backend** — FastAPI, OpenAI API (gpt-4o-mini), HuggingFace Inference API (facebook/roberta-hate-speech-dynabench-r4-target) (deployed on Railway)
 - **Database** — PostgreSQL (Supabase hosting)
 
 ## Setup
@@ -73,11 +75,17 @@ Open [http://localhost:3000](http://localhost:3000).
 
 The backend uses SQLAlchemy. Set `DATABASE_URL` to a PostgreSQL connection string. The `inputs` table is created automatically on startup.
 
-Example:
+Example (Supabase pooler):
 
 ```
 postgresql://postgres.[project-ref]:[password]@aws-0-us-east-1.pooler.supabase.com:6543/postgres
 ```
+
+### Deployment
+
+- **Frontend** — Netlify: static export, build from `frontend/`, publish `dist/`
+- **Backend** — Railway: Python web service, root `backend/`, start `uvicorn api:app --host 0.0.0.0 --port $PORT`
+- Set `NEXT_PUBLIC_API_URL` in Netlify to the Railway API URL so the frontend can call the backend.
 
 ## API
 
