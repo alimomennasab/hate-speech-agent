@@ -8,6 +8,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from huggingface_hub import InferenceClient
+from db import save_input
 
 load_dotenv()
 OPENAI_KEY = os.getenv("OPENAI_KEY")
@@ -40,7 +41,7 @@ def parse_json(text: str) -> dict:
     end = text.rfind("}") + 1
     if start >= 0 and end > start:
         text = text[start:end]
-        
+
     return json.loads(text)
 
 
@@ -103,6 +104,11 @@ async def classify_text(input: TextInput):
     text = input.text.strip()
     if not text:
         raise HTTPException(status_code=400, detail="Text cannot be empty")
+
+    try:
+        save_input(text)
+    except Exception as e:
+        print(f"DB save failed: {e}")
 
     # GPT reasoning call
     gpt_output = call_gpt(text)
