@@ -1,11 +1,11 @@
-# Hate Speech Agent
+# Content Moderation Agent
 
 This project is a content moderation agent demo that uses a language model to determine whether text content should be routed to a hate speech classifier or spam classifier. Rather than sending all inputs directly to both classifier, or relying entirely on the agent's language model to perform classification without safeguards, the agent first evaluates whether content is worth classifying, which filters out code/spam/other non-relevant text. This reduces unnecessary API calls and computational costs, while providing a second layer of content classification to truly ensure that the input does not violate content policies.
 
 
 **Live demo:** [https://hate-speech-agent.netlify.app](https://hate-speech-agent.netlify.app)
 
-<img width="1440" height="900" alt="Screenshot 2026-02-07 at 6 48 23 PM" src="https://github.com/user-attachments/assets/7b2cf8dc-ab79-471b-8e08-1d790b645caa" />
+<img width="1440" height="900" alt="Screenshot 2026-02-12 at 10 30 50 AM" src="https://github.com/user-attachments/assets/c97e0082-28ec-412d-8f8a-e51cb7a1b519" />
 
 ## Models
 
