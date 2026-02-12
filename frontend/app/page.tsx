@@ -16,25 +16,43 @@ export default function Home() {
   const [inputText, setInputText] = useState("");
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<ClassifyResult | null>(null);
+  const [showTimeoutPopup, setShowTimeoutPopup] = useState(false);
+
+  const TIMEOUT_MS = 60_000;
 
   const handleCheck = async () => {
     setResult(null);
     setLoading(true);
+    setShowTimeoutPopup(false);
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), TIMEOUT_MS);
     try {
       const res = await fetch(`${API_URL}/classify`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text: inputText }),
+        signal: controller.signal,
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.detail || "Request failed");
       setResult(data);
     } catch (err) {
-      console.log(err instanceof Error ? err.message : "Something went wrong");
+      const msg = err instanceof Error ? err.message : String(err);
+      const isTimeout =
+        (err instanceof Error && err.name === "AbortError") ||
+        msg === "Failed to fetch" ||
+        /timed out|timeout/i.test(msg);
+      if (isTimeout) {
+        setShowTimeoutPopup(true);
+      } else {
+        console.log(err instanceof Error ? err.message : "Something went wrong");
+      }
     } finally {
+      clearTimeout(timeoutId);
       setLoading(false);
     }
   };
+
 
   return (
     <div className="flex min-h-screen flex-col bg-[#f9f4e6]">
@@ -154,6 +172,24 @@ export default function Home() {
           View on GitHub
         </a>
       </footer>
+
+      {showTimeoutPopup && (
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/50 p-4">
+          <div className="w-full max-w-md rounded-xl border border-gray-200 bg-white p-6 shadow-lg">
+            <h2 className="text-lg font-semibold text-black mb-3">Request timed out</h2>
+            <p className="text-sm text-gray-700 mb-5">
+              The request timed out. Unfortunately, I&apos;m on the Render free tier, which means my instance spins down after 15 mins of inactivity. This means the cron job I set up to ping my backend every 10 minutes is currently not working. Please retry in a few minutes.
+            </p>
+            <button
+              type="button"
+              onClick={() => setShowTimeoutPopup(false)}
+              className="w-full rounded-xl bg-[#ff3912] py-2.5 text-black font-medium hover:opacity-90 transition-opacity"
+            >
+              OK
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
