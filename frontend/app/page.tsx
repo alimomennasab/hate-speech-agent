@@ -72,12 +72,12 @@ export default function Home() {
   return (
     <div className="flex min-h-screen flex-col bg-[#f9f4e6]">
       {/* HEADER */}
-      <header className="sticky top-0 z-100 flex items-center justify-between bg-[#ff3912] px-8 py-4">
-        <h1 className="text-3xl font-medium tracking-tight text-black">
+      <header className="sticky top-0 z-100 flex flex-wrap items-center gap-2 bg-[#ff3912] px-4 py-3 sm:px-8 sm:py-4">
+        <h1 className="flex-1 text-lg font-medium tracking-tight text-black sm:text-3xl">
           Content Moderation Agent Demo
         </h1>
         <div
-          className="relative"
+          className="relative ml-auto"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
@@ -125,7 +125,7 @@ export default function Home() {
             />
             {!inputText && (
               <div
-                className="pointer-events-none absolute inset-0 flex flex-col gap-1 px-4 py-3.5 text-gray-400 text-sm"
+                className="pointer-events-none absolute inset-0 flex flex-col gap-1 px-4 py-3.5 text-xs text-gray-400 sm:text-sm break-words"
                 aria-hidden
               >
                 <span>• Non-classified neutral speech example: hello, how are you</span>
