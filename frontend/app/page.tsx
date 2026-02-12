@@ -74,7 +74,7 @@ export default function Home() {
       {/* HEADER */}
       <header className="sticky top-0 z-100 flex flex-wrap items-center gap-2 bg-[#ff3912] px-4 py-3 sm:px-8 sm:py-4">
         <h1 className="flex-1 text-lg font-medium tracking-tight text-black sm:text-3xl">
-          Content Moderation Agent Demo
+          Content Moderation Agent
         </h1>
         <div
           className="relative ml-auto"
@@ -86,7 +86,7 @@ export default function Home() {
             onClick={togglePinned}
             className="font-medium text-black p-2 hover:opacity-90 transition-opacity"
           >
-            HOW DOES THIS WORK?
+            HOW IT WORKS
           </button>
           {/* INFO POPUP */}
           {isInfoOpen && (
