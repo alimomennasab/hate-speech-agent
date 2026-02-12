@@ -5,6 +5,21 @@ import { useToggle } from "@/app/hooks/useToggle"
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
+const TICKER_EXAMPLES = [
+  { text: "go back to your country", label: "hate speech" },
+  { text: "I hate your kind", label: "hate speech" },
+  {
+    text: "You are awarded a BitCoin! call 09061221066 from landline. Delivery within 28 days.",
+    label: "spam",
+  },
+  {
+    text: "You win a free iPhone! Text 123-123-1234 your social security number.",
+    label: "spam",
+  },
+  { text: "hello, how are you?", label: "not classified" },
+  { text: "LeBron James is the greatest of all time", label: "not classified" },
+] as const;
+
 type ClassifyResult =
   | { routed: true; reasoning: string; classification_type: string; classification: string; confidence: number }
   | { routed: false; reasoning: string };
@@ -56,6 +71,7 @@ export default function Home() {
 
   return (
     <div className="flex min-h-screen flex-col bg-[#f9f4e6]">
+      {/* HEADER */}
       <header className="sticky top-0 z-100 flex items-center justify-between bg-[#ff3912] px-8 py-4">
         <h1 className="text-3xl font-medium tracking-tight text-black">
           Content Moderation Agent Demo
@@ -72,6 +88,7 @@ export default function Home() {
           >
             HOW DOES THIS WORK?
           </button>
+          {/* INFO POPUP */}
           {isInfoOpen && (
             <div className="absolute right-0 top-full mt-1 w-90 border border-gray-200 bg-white p-4 shadow-lg text-sm text-gray-700 z-[1000]">
               <ol className="space-y-2 list-decimal list-inside">
@@ -88,6 +105,7 @@ export default function Home() {
       </header>
 
       <main className="relative z-0 flex flex-1 items-center justify-center px-4">
+        {/* MAIN INPUT DIV */}
         <div className="w-full max-w-lg border border-gray-200 bg-white p-8 shadow-lg">
           <h1 className="text-xl font-semibold text-black text-center mb-4"> 
             Input text content
@@ -162,7 +180,28 @@ export default function Home() {
         </div>
       </main>
 
-      <footer className="border-t border-gray-200 bg-[#eee8dc] py-4 text-center text-sm text-gray-600">
+      {/* TICKER */}
+      <div className="overflow-hidden border-t border-[#ff3912] bg-[#f9f4eb] py-3">
+        <div
+          className="flex w-max gap-8 whitespace-nowrap text-sm text-gray-700"
+          style={{
+            animation: "ticker-scroll 45s linear infinite",
+          }}
+        >
+          {[...TICKER_EXAMPLES, ...TICKER_EXAMPLES].map(({ text, label }, i) => (
+            <span key={i} className="inline-flex shrink-0 items-center gap-2">
+              <span className="max-w-[280px] truncate font-medium" title={text}>
+                &ldquo;{text}&rdquo;
+              </span>
+              <span className="text-[#ff3912]">→</span>
+              <span className="shrink-0 font-semibold text-gray-900">{label}</span>
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* FOOTER */}
+      <footer className="border-t border-[#ff3912] bg-[#eee8dc] py-4 text-center text-sm text-gray-600">
         <a
           href="https://github.com/alimomennasab/hate-speech-agent"
           target="_blank"
