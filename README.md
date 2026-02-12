@@ -1,6 +1,7 @@
 # Hate Speech Agent
 
-This project is a content moderation agent demo that uses a language model to determine whether text content should be routed to a hate speech classifier. Rather than sending all inputs directly to a classifier, the agent first evaluates whether content is worth classifying, which filters out code/spam/other non-relevant text. This reduces unnecessary API calls and computational costs, while maintaining accurate moderation for legitimate moderation cases.
+This project is a content moderation agent demo that uses a language model to determine whether text content should be routed to a hate speech classifier or spam classifier. Rather than sending all inputs directly to both classifier, or relying entirely on the agent's language model to perform classification without safeguards, the agent first evaluates whether content is worth classifying, which filters out code/spam/other non-relevant text. This reduces unnecessary API calls and computational costs, while providing a second layer of content classification to truly ensure that the input does not violate content policies.
+
 
 **Live demo:** [https://hate-speech-agent.netlify.app](https://hate-speech-agent.netlify.app)
 
@@ -12,19 +13,21 @@ This project is a content moderation agent demo that uses a language model to de
 |-------|----------|---------|
 | **gpt-4o-mini** | OpenAI | Decides if input is valid for hate speech classification. Returns JSON with `should_classify` (boolean) and `reasoning` (string) outputs.|
 | **facebook/roberta-hate-speech-dynabench-r4-target** | HuggingFace (Meta) | RoBERTa-based text classifier; outputs `hate` and `nothate` confidence scores (floats). |
+| **mrm8488/bert-tiny-finetuned-sms-spam-detection** | HuggingFace | BERT-based text classifier; outputs `LABEL_1` (spam) and `LABEL_0` (not spam) confidence scores (floats). |
 
 ## How It Works
 
 1. **Input** — User submits text to moderate.
-2. **GPT-4o-mini routing** — The model decides if the input is valid and should be classified for hate speech (vs. code, spam, etc.).
-3. **RoBERTa classification** — If routed, the text is sent to `facebook/roberta-hate-speech-dynabench-r4-target` via the HuggingFace Inference API.
-4. **Result** — The app shows flagged or not flagged with a confidence score.
-5. **Logging** — All inputs are saved to PostgreSQL with timestamps.
+2. **GPT-4o-mini routing** — The model decides if the input is valid and should be classified for hate speech or spam.
+3. **RoBERTa classification** — If routed to the hate speech classifier, the text is sent to `facebook/roberta-hate-speech-dynabench-r4-target` via the HuggingFace Inference API.
+4. **Spam classification** — If routed to the spam classifier, the text is sent to `facebook/mrm8488/bert-tiny-finetuned-sms-spam-detection` via the HuggingFace Inference API.
+5. **Result** — The app shows flagged or not flagged with a confidence score, and whether the content is hate/spam.
+6. **Logging** — All inputs are saved to PostgreSQL with timestamps.
 
 ## Stack
 
 - **Frontend** — Next.js 16, React 19, Tailwind CSS (deployed on Netlify)
-- **Backend** — FastAPI, OpenAI API (gpt-4o-mini), HuggingFace Inference API (facebook/roberta-hate-speech-dynabench-r4-target) (deployed on Railway)
+- **Backend** — FastAPI, OpenAI API (gpt-4o-mini), HuggingFace Inference API (facebook/roberta-hate-speech-dynabench-r4-target) (deployed on Render)
 - **Database** — PostgreSQL (Supabase hosting)
 
 ## Setup
@@ -86,8 +89,8 @@ postgresql://postgres.[project-ref]:[password]@aws-0-us-east-1.pooler.supabase.c
 ### Deployment
 
 - **Frontend** — Netlify: static export, build from `frontend/`, publish `dist/`
-- **Backend** — Railway: Python web service, root `backend/`, start `uvicorn api:app --host 0.0.0.0 --port $PORT`
-- Set `NEXT_PUBLIC_API_URL` in Netlify to the Railway API URL so the frontend can call the backend.
+- **Backend** — Render: Python web service, root `backend/`, start `uvicorn api:app --host 0.0.0.0 --port 8000`
+- Set `NEXT_PUBLIC_API_URL` in Netlify to the Render API URL so the frontend can call the backend.
 
 ## API
 
@@ -101,5 +104,7 @@ postgresql://postgres.[project-ref]:[password]@aws-0-us-east-1.pooler.supabase.c
 - Train and host a custom hate speech classification model.
 - Add classification results (label, confidence) in the database alongside inputs.
 - Support batch classification for multiple texts.
+- Same for spam.
+- More detailed input logging in Postgres.
 
 ---
