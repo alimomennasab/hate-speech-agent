@@ -4,6 +4,8 @@ This project is a content moderation agent demo that uses a language model to de
 
 **Live demo:** [https://hate-speech-agent.netlify.app](https://hate-speech-agent.netlify.app)
 
+<img width="1440" height="900" alt="Screenshot 2026-02-07 at 6 48 23 PM" src="https://github.com/user-attachments/assets/7b2cf8dc-ab79-471b-8e08-1d790b645caa" />
+
 ## Models
 
 |Model | Provider | Purpose |
